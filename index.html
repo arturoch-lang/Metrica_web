@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Métrica mkt — Marketing digital, contenido y datos</title>
+<meta name="description" content="Métrica mkt: asesoría en campañas de marketing digital, analítica, automatización, desarrollo web, fotografía y video con dron. Mide y crece.">
+<meta property="og:title" content="Métrica mkt — Mide y crece">
+<meta property="og:description" content="Marketing digital guiado por datos: campañas, analítica, automatización, web, fotografía y video con dron.">
+<meta property="og:image" content="assets/logo-vertical.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0a;--paper:#fff;--mute:#6b6b6b;--line:#e7e7e5;--pad:clamp(20px,4vw,56px);--display:'Inter Tight',system-ui,sans-serif;--accent:'Instrument Serif',Georgia,serif;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--pad)*1.2 + 40px);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{background:var(--paper);color:var(--ink);font:300 16px/1.6 'Inter Tight',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+::selection{background:var(--ink);color:#fff}
+:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+h1,h2,h3,summary{text-wrap:balance}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+em{font-family:var(--accent);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.mono{font:400 11px/1.4 'Inter Tight',sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.pad{padding-inline:var(--pad)}
+main,section,header,footer{position:relative;z-index:1}
+
+/* ===== capa de fondo: elemento secundario (logo en contorno) que se mueve con el scroll ===== */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg svg{position:absolute;overflow:visible;will-change:transform}
+.bg svg{fill:none;stroke:var(--ink);stroke-width:3}
+.bg .o1{width:150vmax;left:50%;top:50%;margin:-58vmax 0 0 -75vmax;opacity:.07}
+.bg .o2{width:70vmax;right:-30vmax;top:10vh;opacity:.06}
+.bg .o3{width:55vmax;left:-25vmax;bottom:-15vh;opacity:.06}
+.bg .rings{width:120vmax;left:50%;top:50%;margin:-60vmax 0 0 -60vmax;opacity:.05}
+.bg .rings circle{fill:none;stroke:var(--ink);vector-effect:non-scaling-stroke}
+
+/* cursor */
+.cur{position:fixed;left:0;top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:99;transition:width .35s,height .35s,margin .35s}
+.cur.big{width:64px;height:64px;margin:-32px 0 0 -32px}
+@media(hover:none){.cur{display:none}}
+
+/* barra superior */
+.top{position:fixed;inset:0 0 auto;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:calc(var(--pad)*.6) var(--pad);mix-blend-mode:difference;color:#fff}
+.top img{height:22px;filter:invert(1)}
+.top nav{display:flex;gap:28px}
+.top nav a:hover{font-style:italic}
+.burger{display:none;background:none;border:0;color:inherit;font:inherit;letter-spacing:.2em;cursor:pointer;padding:14px 0 14px 16px;margin:-14px 0}
+.progress{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--ink);transform-origin:left;transform:scaleX(0);z-index:41;mix-blend-mode:difference;filter:invert(1)}
+.drawer{position:fixed;inset:0;z-index:39;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:var(--pad);clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--ease)}
+.drawer.open{clip-path:inset(0)}
+.drawer a{font:200 clamp(44px,12vw,72px)/1.05 var(--display);letter-spacing:-.05em}
+@media(max-width:860px){.top nav{display:none}.burger{display:block}}
+
+/* hero */
+.hero{min-height:100svh;display:grid;grid-template-rows:1fr auto;padding:clamp(90px,14vh,140px) var(--pad) calc(var(--pad) + 64px)}
+.lens{align-self:center;justify-self:center;width:min(58vw,620px,calc(46svh * 1.28));clip-path:inset(0 50% 0 50%);transition:clip-path 2s cubic-bezier(.7,0,.2,1) .1s;will-change:transform}
+.lens.on{clip-path:inset(0)}
+.lens svg{width:100%;height:auto;display:block}
+.lens path,.lens circle{fill:var(--ink)}
+.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:4vh}
+.hero h1{font:200 clamp(58px,min(10.5vw,14svh),180px)/.86 var(--display);letter-spacing:-.06em}
+.hero h1 em{display:block;padding-left:1.05em}
+.hero .lede{max-width:28ch;text-align:right;color:#555;font-size:15px;font-weight:400}
+.hero .lede b{display:block;font-weight:400;color:var(--ink);margin-top:14px;letter-spacing:.2em;font-size:11px;text-transform:uppercase}
+@media(max-width:700px){
+  .hero{grid-template-rows:auto auto auto;align-content:center;gap:0}
+  .lens{width:86vw;margin:4vh 0 6vh}
+  .hero-foot{flex-direction:column;align-items:flex-start}
+  .hero h1{font-size:clamp(64px,19vw,96px)}
+  .hero .lede{text-align:left;max-width:34ch}
+}
+
+/* marquesina */
+.marquee{overflow:hidden;border-block:1px solid var(--ink);background:var(--paper)}
+.track{display:flex;width:max-content;animation:mq 45s linear infinite;padding:18px 0}
+.track span{font:300 clamp(26px,3.6vw,48px)/1 var(--display);letter-spacing:-.03em;white-space:nowrap;padding-right:48px;display:flex;align-items:center;gap:48px}
+.track span::after{content:"";width:clamp(18px,2vw,26px);aspect-ratio:1.28;background:url(assets/icon.svg) center/contain no-repeat}
+.track span:nth-child(even){font-family:var(--accent);font-style:italic;letter-spacing:0;color:#777}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* manifiesto */
+.statement{min-height:170vh}
+.stick{position:sticky;top:0;height:100svh;display:flex;align-items:center}
+.statement p{font:200 clamp(32px,5.4vw,88px)/1.08 var(--display);letter-spacing:-.045em;max-width:19ch}
+.statement span{color:#dedede;transition:color .35s}
+.statement span.on{color:var(--ink)}
+
+/* encabezados de sección */
+.sec{padding-block:clamp(90px,14vh,170px)}
+.sec-head{display:grid;grid-template-columns:1fr 1.1fr;gap:4vw;align-items:end;margin-bottom:clamp(40px,8vh,90px)}
+.sec-head h2{font:200 clamp(44px,7vw,120px)/.92 var(--display);letter-spacing:-.055em}
+.sec-head p{color:#444;max-width:44ch;font-size:16px}
+.sec-head .mono{display:block;color:var(--mute);margin-bottom:22px}
+@media(max-width:860px){.sec-head{grid-template-columns:1fr}}
+
+/* servicios */
+.svc{counter-reset:s;border-top:1px solid var(--ink)}
+.item{display:grid;grid-template-columns:6ch 1fr minmax(44px,64px);gap:2vw;align-items:center;padding:clamp(18px,2.6vh,28px) 0;border-bottom:1px solid var(--line);cursor:pointer;background:transparent}
+.item .n{font-size:11px;letter-spacing:.2em;color:var(--mute)}
+.item h3{font:200 clamp(30px,4.8vw,80px)/1 var(--display);letter-spacing:-.045em;transition:transform .7s var(--ease)}
+.item .tag{display:block;font:400 11px/1.4 'Inter Tight',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-top:10px}
+.item svg{width:100%;height:auto;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;transition:transform .7s var(--ease)}
+.item svg .draw{stroke-dasharray:160;stroke-dashoffset:160;transition:stroke-dashoffset 1.8s var(--ease) .2s}
+.item.in svg .draw{stroke-dashoffset:0}
+.detail{grid-column:2/4;display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s var(--ease)}
+.detail>div{overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;gap:3vw}
+.detail p{color:#444;max-width:48ch;padding-top:16px;font-weight:400}
+.detail ul{list-style:none;padding:16px 0 12px;columns:1}
+.detail li{font-size:15px;font-weight:400;padding:7px 0;border-bottom:1px solid var(--line);display:flex;gap:10px}
+.detail li::before{content:"—";color:var(--mute)}
+.item:hover h3,.item.open h3{transform:translateX(1.5vw);font-style:italic}
+.item:hover svg,.item.open svg{transform:rotate(-10deg) scale(1.06)}
+.item.open .detail{grid-template-rows:1fr}
+@media(max-width:700px){
+  .item{grid-template-columns:1fr 44px;gap:14px}
+  .item .n{grid-column:1/3}
+  .item h3{font-size:clamp(30px,9vw,42px)}
+  .detail{grid-column:1/3}
+  .detail>div{grid-template-columns:1fr;gap:0}
+  .item:hover h3{transform:none;font-style:normal}.item.open h3{transform:none;font-style:italic}
+}
+
+/* sección negra: producción visual con el elemento secundario gigante */
+.visual{background:var(--ink);color:#fff;overflow:hidden}
+.visual .sec-head p{color:#bbb}
+.visual .mono{color:#888!important}
+.big-outline{position:absolute;left:50%;top:50%;width:150vw;transform:translate(-50%,-50%);opacity:.18;pointer-events:none}
+.big-outline{fill:none;stroke:#fff;stroke-width:2.5}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#2a2a2a;border:1px solid #2a2a2a;position:relative}
+.cell{background:var(--ink);padding:clamp(28px,3vw,44px);min-height:clamp(300px,46vh,440px);display:flex;flex-direction:column;justify-content:space-between;transition:background .5s}
+.cell:hover{background:#141414}
+.cell svg{width:52px;height:52px;fill:none;stroke:#fff;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.cell h3{font:300 clamp(30px,3vw,46px)/1.02 var(--display);letter-spacing:-.035em;margin:24px 0 12px}
+.cell p{color:#aaa;font-size:15px;font-weight:400;max-width:34ch}
+.cell .mono{color:#8a8a8a;margin-top:22px}
+@media(max-width:860px){.trio{grid-template-columns:1fr}.cell{min-height:auto;gap:30px}}
+
+/* método */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,32px)}
+.step{border-top:1px solid var(--ink);padding-top:22px;position:relative}
+.step .k{font:200 clamp(54px,6vw,96px)/.9 var(--display);letter-spacing:-.05em;color:#d6d6d3}
+.step h3{font:300 30px/1.1 var(--display);letter-spacing:-.035em;margin:16px 0 10px}
+.step p{color:#4a4a4a;font-size:15px;font-weight:400}
+.step::before{content:"";position:absolute;left:0;top:-1px;height:1px;width:0;background:var(--ink);transition:width 1.4s var(--ease) var(--d,0ms)}
+@media(max-width:860px){.steps{grid-template-columns:1fr 1fr}}@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* por qué */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,64px)}
+.why div{padding-top:20px;border-top:1px solid var(--line)}
+.why h3{font:300 26px/1.15 var(--display);letter-spacing:-.03em;margin-bottom:10px}
+.why p{color:#4a4a4a;font-size:15px;font-weight:400;max-width:36ch}
+@media(max-width:860px){.why{grid-template-columns:1fr}}
+
+/* preguntas */
+.faq{border-top:1px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line);padding:22px 0}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font:300 clamp(22px,2.4vw,34px)/1.2 var(--display);letter-spacing:-.03em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:'Inter Tight',sans-serif;font-weight:300;transition:transform .4s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:#4a4a4a;max-width:62ch;padding-top:12px;font-weight:400}
+
+/* contacto */
+.contact{min-height:100svh;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--pad) + 70px) var(--pad) var(--pad);overflow:hidden}
+.contact .mono{color:#8a8a8a}
+.contact a.big{font:200 clamp(60px,17vw,300px)/.85 var(--display);letter-spacing:-.07em;display:inline-block;position:relative}
+.contact a.big::after{content:"";position:absolute;left:0;bottom:.06em;height:2px;width:100%;background:#fff;transform:scaleX(0);transform-origin:right;transition:transform .8s var(--ease)}
+.contact a.big:hover::after{transform:scaleX(1);transform-origin:left}
+.contact .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid #2a2a2a;padding-top:28px;font-size:15px;font-weight:400;color:#999}
+.contact .grid b{display:block;font:400 11px/1 'Inter Tight',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#8a8a8a;margin-bottom:10px}
+.contact .grid a{color:#fff;border-bottom:1px solid #444}
+.contact .grid a:hover{border-color:#fff}
+.contact .ghost{position:absolute;right:-20vw;top:50%;width:90vw;transform:translateY(-50%);opacity:.12;pointer-events:none}
+.contact .ghost{fill:none;stroke:#fff;stroke-width:2.5}
+@media(max-width:700px){.contact .grid{grid-template-columns:1fr}}
+
+/* formulario de contacto */
+.cform{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;max-width:980px;margin:48px 0 56px;position:relative}
+.cform .full{grid-column:1/-1}
+.cform label{display:block;color:#8a8a8a;margin-bottom:6px}
+.cform .f:has([aria-invalid]) label{color:#fff}
+.cform .f:has([aria-invalid]) label::after{content:" — obligatorio"}
+.cform input,.cform select,.cform textarea{width:100%;background:none;border:0;border-bottom:1px solid #444;border-radius:0;color:#fff;font:300 18px/1.5 var(--display);padding:8px 0;transition:border-color .3s}
+.cform select{appearance:none;cursor:pointer;padding-right:24px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23fff' stroke-width='1.2'/%3E%3C/svg%3E") right center/12px no-repeat}
+.cform select option{color:var(--ink)}
+.cform textarea{resize:vertical;min-height:84px}
+.cform :is(input,select,textarea):focus-visible{outline:none;border-color:#fff}
+.cform [aria-invalid]{border-color:#fff}
+.cf-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.cform .send{min-height:52px;padding:0 28px;background:#fff;color:var(--ink);border:0;cursor:pointer;display:inline-flex;gap:18px;align-items:center;transition:opacity .3s}
+.cform .send:disabled{opacity:.5;cursor:wait}
+.fmsg{min-height:1.5em;color:#bbb;font-size:15px;font-weight:400}
+.fmsg.ok{color:#fff}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+@media(max-width:700px){.cform{grid-template-columns:1fr;gap:24px}}
+/* whatsapp: botón flotante + ventana */
+.wa{position:fixed;right:calc(18px + env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));z-index:45;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.wa-float{width:56px;height:56px;border-radius:50%;background:var(--ink);color:#fff;border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.25);transition:transform .4s var(--ease)}
+.wa-float:hover{transform:scale(1.06)}
+.wa-float svg{width:24px;height:24px}
+.wa-float .x{display:none;font:300 30px/1 'Inter Tight',sans-serif}
+.wa.open .wa-float svg{display:none}.wa.open .wa-float .x{display:block}
+.wa-panel{width:min(340px,calc(100vw - 36px));background:var(--paper);color:var(--ink);border:1px solid var(--ink);box-shadow:0 18px 50px rgba(0,0,0,.18);transform-origin:bottom right;transform:translateY(12px) scale(.96);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s .35s}
+.wa.open .wa-panel{opacity:1;transform:none;visibility:visible;transition-delay:0s}
+.wa-head{background:var(--ink);color:#fff;padding:18px 20px;display:flex;align-items:center;gap:14px}
+.wa-head img{width:34px;filter:invert(1)}
+.wa-head strong{display:block;font:300 24px/1 var(--display);letter-spacing:-.03em}
+.wa-head .mono{color:#8a8a8a;margin-top:6px;display:block}
+.wa-body{padding:20px}
+.wa-msg{background:#f3f3f1;padding:12px 14px;font-size:15px;font-weight:400;max-width:90%;border-radius:2px 14px 14px 14px}
+.wa-body label{display:block;color:var(--mute);margin-top:20px}
+.wa-body textarea{width:100%;border:0;border-bottom:1px solid var(--line);font:400 16px/1.5 'Inter Tight',sans-serif;color:inherit;background:none;resize:none;padding:8px 0}
+.wa-body textarea:focus-visible{outline:none;border-color:var(--ink)}
+.wa-go{display:flex;justify-content:space-between;align-items:center;min-height:48px;margin-top:18px;padding:0 18px;background:var(--ink);color:#fff}
+.wa-call{display:flex;justify-content:center;align-items:center;min-height:44px;margin-top:6px;font-size:14px;font-weight:400;color:#444}
+.wa-call u{text-underline-offset:3px}
+@media(max-width:700px){
+  .mono,.item .n,.item .tag,.hero .lede b,.contact .grid b{font-size:12px}
+}
+
+/* reveal */
+.r{opacity:0;transform:translateY(40px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0ms)}
+.r.in{opacity:1;transform:none}
+.step.in::before{width:100%}
+.mask{display:block;overflow:hidden;padding-bottom:.06em}.mask>span{display:block;transform:translateY(110%);transition:transform 1.3s var(--ease);transition-delay:var(--d,0ms)}
+.mask.in>span{transform:none}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.r{opacity:1;transform:none}.mask>span{transform:none}.lens{clip-path:none}.statement span{color:var(--ink)}.item svg .draw{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="mk" d="M910 1477C871 1472 827 1460 794 1447C788 1444 781 1441 778 1439C762 1433 730 1415 709 1402C671 1377 634 1348 588 1306C583 1302 577 1296 574 1294C571 1292 563 1285 557 1279C531 1255 518 1243 505 1232C438 1174 407 1151 344 1114C333 1108 295 1090 286 1087C282 1085 277 1083 275 1082C273 1081 268 1079 264 1078C261 1077 256 1075 254 1074C250 1072 235 1067 218 1063C211 1061 202 1058 197 1057C192 1055 187 1054 186 1054C185 1054 177 1052 168 1050C159 1049 146 1046 140 1045C134 1045 124 1043 118 1042C101 1040 78 1038 66 1038C59 1038 47 1037 40 1037C27 1035 26 1035 23 1033C20 1029 20 1023 20 970C21 921 20 921 25 918C28 916 41 915 60 914C90 913 128 908 143 905C146 904 152 903 157 902C162 901 170 900 174 898C179 897 187 895 192 894C196 893 203 891 207 890C211 888 217 886 221 885C234 881 256 873 276 864C295 855 300 852 297 848C295 845 287 841 270 835C233 821 233 821 192 810C185 808 175 806 170 806C165 805 157 803 152 802C144 800 118 797 88 794C83 793 67 793 53 792C26 791 25 791 22 786C21 784 20 772 20 730L20 676L23 673C26 671 26 670 44 670C65 669 85 667 99 666C105 665 116 663 123 663C130 662 139 660 143 660C165 655 180 652 189 649C194 647 199 646 199 646C203 646 244 632 266 623C282 616 286 614 286 610C286 608 285 607 281 604C271 598 196 574 188 574C186 574 179 572 172 571C165 569 156 567 152 567C143 565 126 563 122 562C112 560 83 558 45 556C27 556 27 556 24 553C20 549 20 545 20 490C20 447 21 442 22 439C23 438 25 436 26 435C27 435 36 434 46 434C90 433 133 427 171 418C180 416 190 414 193 413C196 412 201 411 204 409C208 408 214 406 219 405C249 396 296 376 325 359C329 356 337 352 342 349C357 340 399 312 418 298C438 283 461 265 493 239C506 228 524 214 534 206C543 199 555 189 560 184C574 174 608 147 624 137C685 93 735 67 795 47C812 42 824 38 826 38C827 38 833 36 840 35C846 33 856 31 861 30C866 29 872 28 875 28C877 27 882 27 886 26C890 25 896 24 900 24C907 23 950 21 965 21C979 21 1020 23 1030 24C1035 25 1045 26 1053 27C1061 29 1070 30 1074 30C1077 31 1084 32 1089 34C1093 35 1101 37 1105 38C1120 40 1181 60 1193 66C1195 67 1200 69 1202 70C1210 73 1247 90 1258 96C1264 100 1273 105 1278 108C1329 136 1380 171 1495 259C1530 285 1583 323 1599 333C1603 336 1611 340 1616 344C1628 352 1634 355 1648 363C1666 373 1707 393 1718 397C1722 399 1729 402 1733 403C1745 408 1762 414 1764 414C1764 414 1770 416 1776 417C1782 419 1789 421 1793 422C1797 423 1803 424 1807 425C1816 428 1829 430 1846 431C1853 432 1861 433 1864 433C1866 434 1873 434 1879 434C1891 434 1896 435 1898 439C1900 441 1900 447 1900 495C1900 553 1900 553 1894 555C1893 555 1885 556 1877 556C1842 558 1828 559 1808 563C1802 564 1794 565 1789 566C1784 567 1775 569 1768 571C1761 572 1755 574 1754 574C1753 574 1747 576 1741 577C1735 579 1728 581 1726 582C1721 583 1714 585 1696 593C1692 594 1686 596 1682 598C1675 601 1673 602 1672 605C1670 609 1673 612 1692 621C1702 626 1712 631 1716 632C1719 633 1726 636 1732 638C1744 643 1773 653 1778 654C1780 654 1787 656 1794 658C1816 663 1850 668 1878 670C1885 670 1892 671 1894 671C1900 673 1900 671 1900 731L1900 785L1898 788C1895 791 1890 792 1872 792C1864 792 1854 792 1850 793C1834 795 1818 797 1806 798C1798 799 1789 801 1786 802C1782 803 1774 805 1767 806C1761 807 1754 809 1751 810C1749 811 1744 812 1741 813C1733 815 1707 823 1696 828C1693 829 1688 831 1685 832C1673 837 1664 841 1662 842C1662 843 1661 845 1661 847C1661 849 1662 850 1664 852C1668 855 1689 866 1699 870C1730 883 1743 888 1759 893C1763 894 1769 896 1773 898C1781 900 1791 903 1815 907C1827 910 1851 913 1869 914C1887 915 1894 917 1897 920L1900 923L1900 975C1900 1033 1900 1033 1894 1035C1891 1036 1872 1038 1860 1038C1829 1038 1758 1051 1720 1064C1696 1073 1683 1078 1662 1087C1643 1095 1630 1102 1622 1106C1619 1108 1612 1112 1606 1116C1586 1127 1558 1145 1531 1164C1514 1176 1476 1205 1467 1213C1462 1217 1455 1223 1450 1227C1445 1230 1435 1239 1428 1245C1421 1251 1411 1260 1406 1264C1401 1268 1390 1277 1381 1284C1287 1364 1221 1409 1152 1439C1123 1452 1074 1467 1053 1470C1048 1471 1040 1472 1035 1473C1016 1477 1001 1478 960 1478C936 1478 917 1477 910 1477ZM987 1357C1043 1352 1095 1335 1148 1306C1179 1288 1222 1258 1261 1226C1267 1221 1276 1214 1280 1211C1284 1208 1295 1198 1305 1190C1314 1182 1326 1172 1331 1168C1336 1165 1346 1156 1354 1149C1361 1143 1372 1134 1377 1130C1382 1126 1391 1119 1396 1114C1407 1105 1446 1076 1466 1061C1494 1041 1529 1019 1564 1000C1578 992 1586 988 1606 979C1610 977 1614 974 1616 973C1620 968 1619 967 1588 950C1567 937 1558 932 1548 925C1539 919 1535 918 1530 920C1524 923 1484 953 1449 982C1441 989 1432 996 1430 998C1428 1000 1419 1007 1411 1014C1403 1021 1394 1028 1392 1031C1389 1033 1376 1044 1363 1055C1349 1066 1334 1078 1329 1082C1324 1085 1315 1093 1308 1098C1280 1119 1236 1150 1212 1164C1195 1173 1151 1194 1143 1197C1139 1198 1135 1200 1133 1201C1127 1204 1102 1213 1096 1214C1092 1215 1087 1216 1083 1218C1069 1222 1032 1229 1011 1231C1000 1231 988 1232 983 1233C973 1234 948 1234 939 1233C936 1233 925 1232 916 1231C877 1228 826 1215 788 1199C784 1197 777 1194 772 1192C765 1188 737 1174 726 1167C716 1161 682 1138 672 1130C654 1117 633 1100 619 1088C611 1081 602 1073 599 1070C592 1065 582 1056 560 1036C529 1007 523 1002 518 998C515 996 510 991 507 989C481 965 433 927 428 925C422 924 418 926 403 934C384 945 370 953 353 961C338 969 336 971 340 976C341 977 344 979 346 980C359 986 397 1006 402 1008C405 1010 412 1014 418 1018C447 1034 513 1080 543 1106C550 1111 558 1118 562 1121C568 1126 589 1145 611 1164C615 1168 625 1177 634 1185C643 1193 654 1203 659 1207C710 1254 763 1295 800 1315C806 1318 812 1322 812 1322C814 1323 830 1330 840 1334C843 1335 848 1338 850 1339C853 1339 858 1341 862 1342C867 1344 875 1346 880 1347C890 1350 921 1356 935 1357C949 1358 974 1358 987 1357ZM1000 1110C1008 1109 1016 1108 1020 1107C1024 1107 1033 1105 1040 1103C1048 1101 1057 1099 1060 1098C1063 1097 1069 1095 1073 1094C1077 1093 1083 1091 1086 1089C1090 1087 1093 1086 1094 1086C1095 1086 1100 1084 1105 1081C1160 1057 1217 1019 1289 958C1298 950 1310 941 1314 938C1318 934 1328 926 1336 918C1352 905 1367 893 1398 868C1422 849 1425 846 1425 843C1425 839 1423 837 1406 824C1379 803 1381 804 1361 820C1304 867 1261 899 1219 924C1193 939 1154 958 1130 967C1126 968 1120 971 1117 972C1086 983 1041 993 1003 997C984 998 940 998 921 997C879 992 841 983 797 967C786 963 758 949 740 939C699 916 642 874 595 832C580 818 574 814 569 815C567 816 538 839 535 843C530 849 532 851 559 874C585 895 597 906 610 919C618 925 625 932 628 934C630 936 637 942 643 948C649 953 658 962 664 967C670 972 679 980 685 985C750 1042 801 1076 856 1095C877 1102 906 1109 924 1110C932 1111 939 1111 940 1111C943 1112 988 1111 1000 1110ZM1016 872C1028 870 1040 868 1044 867C1048 866 1056 863 1062 862C1068 860 1074 858 1076 858C1078 857 1082 855 1085 854C1105 848 1151 824 1181 805C1205 789 1256 751 1267 740C1276 731 1275 729 1259 719C1223 696 1190 678 1170 669C1139 656 1127 652 1096 642C1058 630 1006 623 963 623C949 623 919 625 908 626C904 627 894 629 888 630C882 630 871 633 864 634C858 636 851 638 849 639C844 640 817 649 804 654C793 658 757 676 742 685C724 695 683 723 677 729C673 732 672 736 674 740C676 742 685 749 713 773C736 793 767 815 791 829C831 853 866 865 908 872C919 874 928 875 928 875C929 876 945 876 963 876C996 875 997 875 1016 872ZM425 772C427 772 453 753 466 742C478 731 478 729 465 718C453 707 426 687 422 685C417 683 413 683 406 687C403 689 397 692 391 696C370 708 360 713 352 717C347 719 341 722 340 723C338 726 337 730 339 732C340 732 350 737 362 743C373 748 385 754 388 756C391 758 394 759 394 759C395 759 399 762 405 765C415 771 421 773 423 772C424 772 425 772 425 772ZM1556 759C1565 754 1581 745 1593 739C1616 728 1619 726 1617 722C1617 720 1613 718 1608 715C1599 711 1580 699 1558 686C1545 678 1541 677 1536 680C1532 682 1514 696 1497 708C1481 721 1480 723 1482 728C1483 730 1510 751 1526 762C1536 769 1538 769 1556 759ZM593 640C629 613 660 592 680 581C682 579 689 576 694 573C710 563 743 547 763 540C781 532 819 520 831 518C835 517 842 515 848 514C853 512 861 511 866 510C871 509 880 508 886 507C908 503 927 502 963 502C1004 502 1018 503 1048 507C1052 508 1062 510 1068 511C1074 512 1085 514 1091 515C1097 517 1105 518 1107 519C1109 519 1113 520 1115 521C1118 522 1125 524 1132 526C1149 530 1179 541 1200 550C1207 553 1215 556 1219 558C1228 562 1257 576 1274 586C1295 598 1317 611 1344 629C1367 645 1371 647 1376 647C1379 647 1382 645 1403 629C1411 622 1420 615 1422 613C1432 605 1433 601 1427 596C1423 591 1418 587 1370 552C1316 511 1278 485 1254 470C1214 445 1160 418 1145 414C1143 413 1139 412 1137 410C1134 409 1129 407 1125 406C1120 405 1115 403 1112 402C1109 400 1103 398 1099 397C1095 396 1089 395 1085 393C1081 392 1076 391 1072 390C1068 389 1060 388 1052 386C1019 379 954 376 912 381C857 387 802 405 748 436C730 446 698 468 681 480C675 485 667 491 664 493C656 498 611 534 603 541C598 546 585 556 548 586C538 594 529 602 528 603C527 604 527 606 527 608C527 611 532 616 544 626C548 629 555 635 560 639C575 652 577 652 593 640ZM419 532C424 530 464 499 501 468C557 422 610 381 640 360C680 334 730 307 766 293C792 283 827 272 843 270C847 269 854 267 858 266C862 265 870 264 874 263C879 262 889 261 896 260C938 255 985 255 1034 260C1062 264 1066 264 1075 267C1080 268 1088 269 1092 270C1097 271 1104 272 1109 274C1114 275 1121 277 1125 278C1139 281 1165 290 1184 298C1189 300 1194 302 1194 302C1197 302 1255 330 1272 339C1336 376 1366 396 1501 499C1514 508 1528 519 1532 522C1544 529 1545 529 1565 519C1573 514 1588 507 1598 502C1615 494 1618 492 1618 489C1618 486 1612 482 1601 476C1555 451 1495 411 1428 360C1355 304 1327 284 1306 269C1278 250 1241 226 1226 218C1221 215 1212 210 1207 207C1198 202 1168 187 1153 181C1129 171 1097 160 1086 158C1083 157 1074 155 1066 154C1050 150 1017 145 997 143C983 142 935 142 920 144C895 147 860 154 840 161C836 162 829 164 824 166C819 167 814 169 812 170C809 171 805 173 802 174C798 175 787 181 776 186C722 213 685 239 599 309C537 360 520 373 490 395C447 427 403 455 360 477C350 482 341 487 340 488C339 489 338 490 338 492C338 494 344 499 349 501C353 502 389 520 404 529C413 533 414 534 419 532Z"/></defs></svg>
+
+<div class="bg" aria-hidden="true">
+  <svg class="rings" viewBox="-100 -100 200 200" id="rings"></svg>
+  <svg class="o1" viewBox="0 0 1920 1498"><use href="#mk"/></svg>
+  <svg class="o2" viewBox="0 0 1920 1498"><use href="#mk"/></svg>
+  <svg class="o3" viewBox="0 0 1920 1498"><use href="#mk"/></svg>
+</div>
+<div class="cur" id="cur"></div>
+<div class="progress" id="prog"></div>
+
+<div class="top">
+  <a href="#inicio" aria-label="Inicio"><img src="assets/wordmark.png" alt="métrica mkt" width="95" height="22"></a>
+  <nav class="mono"><a href="#servicios">Servicios</a><a href="#produccion">Producción</a><a href="#metodo">Método</a><a href="#preguntas">Preguntas</a><a href="#contacto">Contacto</a></nav>
+  <button class="burger mono" id="burger" aria-expanded="false" aria-controls="drawer">Menú</button>
+</div>
+<nav class="drawer" id="drawer" aria-label="Menú">
+  <a href="#servicios">Servicios</a><a href="#produccion"><em>Producción</em></a><a href="#metodo">Método</a><a href="#preguntas">Preguntas</a><a href="#contacto"><em>Contacto</em></a>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="lens" role="img" aria-label="Ícono de métrica mkt"><svg viewBox="0 0 1920 1498"><path fill-rule="evenodd" d="M910 1477C871 1472 827 1460 794 1447C788 1444 781 1441 778 1439C762 1433 730 1415 709 1402C671 1377 634 1348 588 1306C583 1302 577 1296 574 1294C571 1292 563 1285 557 1279C531 1255 518 1243 505 1232C438 1174 407 1151 344 1114C333 1108 295 1090 286 1087C282 1085 277 1083 275 1082C273 1081 268 1079 264 1078C261 1077 256 1075 254 1074C250 1072 235 1067 218 1063C211 1061 202 1058 197 1057C192 1055 187 1054 186 1054C185 1054 177 1052 168 1050C159 1049 146 1046 140 1045C134 1045 124 1043 118 1042C101 1040 78 1038 66 1038C59 1038 47 1037 40 1037C27 1035 26 1035 23 1033C20 1029 20 1023 20 970C21 921 20 921 25 918C28 916 41 915 60 914C90 913 128 908 143 905C146 904 152 903 157 902C162 901 170 900 174 898C179 897 187 895 192 894C196 893 203 891 207 890C211 888 217 886 221 885C234 881 256 873 276 864C295 855 300 852 297 848C295 845 287 841 270 835C233 821 233 821 192 810C185 808 175 806 170 806C165 805 157 803 152 802C144 800 118 797 88 794C83 793 67 793 53 792C26 791 25 791 22 786C21 784 20 772 20 730L20 676L23 673C26 671 26 670 44 670C65 669 85 667 99 666C105 665 116 663 123 663C130 662 139 660 143 660C165 655 180 652 189 649C194 647 199 646 199 646C203 646 244 632 266 623C282 616 286 614 286 610C286 608 285 607 281 604C271 598 196 574 188 574C186 574 179 572 172 571C165 569 156 567 152 567C143 565 126 563 122 562C112 560 83 558 45 556C27 556 27 556 24 553C20 549 20 545 20 490C20 447 21 442 22 439C23 438 25 436 26 435C27 435 36 434 46 434C90 433 133 427 171 418C180 416 190 414 193 413C196 412 201 411 204 409C208 408 214 406 219 405C249 396 296 376 325 359C329 356 337 352 342 349C357 340 399 312 418 298C438 283 461 265 493 239C506 228 524 214 534 206C543 199 555 189 560 184C574 174 608 147 624 137C685 93 735 67 795 47C812 42 824 38 826 38C827 38 833 36 840 35C846 33 856 31 861 30C866 29 872 28 875 28C877 27 882 27 886 26C890 25 896 24 900 24C907 23 950 21 965 21C979 21 1020 23 1030 24C1035 25 1045 26 1053 27C1061 29 1070 30 1074 30C1077 31 1084 32 1089 34C1093 35 1101 37 1105 38C1120 40 1181 60 1193 66C1195 67 1200 69 1202 70C1210 73 1247 90 1258 96C1264 100 1273 105 1278 108C1329 136 1380 171 1495 259C1530 285 1583 323 1599 333C1603 336 1611 340 1616 344C1628 352 1634 355 1648 363C1666 373 1707 393 1718 397C1722 399 1729 402 1733 403C1745 408 1762 414 1764 414C1764 414 1770 416 1776 417C1782 419 1789 421 1793 422C1797 423 1803 424 1807 425C1816 428 1829 430 1846 431C1853 432 1861 433 1864 433C1866 434 1873 434 1879 434C1891 434 1896 435 1898 439C1900 441 1900 447 1900 495C1900 553 1900 553 1894 555C1893 555 1885 556 1877 556C1842 558 1828 559 1808 563C1802 564 1794 565 1789 566C1784 567 1775 569 1768 571C1761 572 1755 574 1754 574C1753 574 1747 576 1741 577C1735 579 1728 581 1726 582C1721 583 1714 585 1696 593C1692 594 1686 596 1682 598C1675 601 1673 602 1672 605C1670 609 1673 612 1692 621C1702 626 1712 631 1716 632C1719 633 1726 636 1732 638C1744 643 1773 653 1778 654C1780 654 1787 656 1794 658C1816 663 1850 668 1878 670C1885 670 1892 671 1894 671C1900 673 1900 671 1900 731L1900 785L1898 788C1895 791 1890 792 1872 792C1864 792 1854 792 1850 793C1834 795 1818 797 1806 798C1798 799 1789 801 1786 802C1782 803 1774 805 1767 806C1761 807 1754 809 1751 810C1749 811 1744 812 1741 813C1733 815 1707 823 1696 828C1693 829 1688 831 1685 832C1673 837 1664 841 1662 842C1662 843 1661 845 1661 847C1661 849 1662 850 1664 852C1668 855 1689 866 1699 870C1730 883 1743 888 1759 893C1763 894 1769 896 1773 898C1781 900 1791 903 1815 907C1827 910 1851 913 1869 914C1887 915 1894 917 1897 920L1900 923L1900 975C1900 1033 1900 1033 1894 1035C1891 1036 1872 1038 1860 1038C1829 1038 1758 1051 1720 1064C1696 1073 1683 1078 1662 1087C1643 1095 1630 1102 1622 1106C1619 1108 1612 1112 1606 1116C1586 1127 1558 1145 1531 1164C1514 1176 1476 1205 1467 1213C1462 1217 1455 1223 1450 1227C1445 1230 1435 1239 1428 1245C1421 1251 1411 1260 1406 1264C1401 1268 1390 1277 1381 1284C1287 1364 1221 1409 1152 1439C1123 1452 1074 1467 1053 1470C1048 1471 1040 1472 1035 1473C1016 1477 1001 1478 960 1478C936 1478 917 1477 910 1477ZM987 1357C1043 1352 1095 1335 1148 1306C1179 1288 1222 1258 1261 1226C1267 1221 1276 1214 1280 1211C1284 1208 1295 1198 1305 1190C1314 1182 1326 1172 1331 1168C1336 1165 1346 1156 1354 1149C1361 1143 1372 1134 1377 1130C1382 1126 1391 1119 1396 1114C1407 1105 1446 1076 1466 1061C1494 1041 1529 1019 1564 1000C1578 992 1586 988 1606 979C1610 977 1614 974 1616 973C1620 968 1619 967 1588 950C1567 937 1558 932 1548 925C1539 919 1535 918 1530 920C1524 923 1484 953 1449 982C1441 989 1432 996 1430 998C1428 1000 1419 1007 1411 1014C1403 1021 1394 1028 1392 1031C1389 1033 1376 1044 1363 1055C1349 1066 1334 1078 1329 1082C1324 1085 1315 1093 1308 1098C1280 1119 1236 1150 1212 1164C1195 1173 1151 1194 1143 1197C1139 1198 1135 1200 1133 1201C1127 1204 1102 1213 1096 1214C1092 1215 1087 1216 1083 1218C1069 1222 1032 1229 1011 1231C1000 1231 988 1232 983 1233C973 1234 948 1234 939 1233C936 1233 925 1232 916 1231C877 1228 826 1215 788 1199C784 1197 777 1194 772 1192C765 1188 737 1174 726 1167C716 1161 682 1138 672 1130C654 1117 633 1100 619 1088C611 1081 602 1073 599 1070C592 1065 582 1056 560 1036C529 1007 523 1002 518 998C515 996 510 991 507 989C481 965 433 927 428 925C422 924 418 926 403 934C384 945 370 953 353 961C338 969 336 971 340 976C341 977 344 979 346 980C359 986 397 1006 402 1008C405 1010 412 1014 418 1018C447 1034 513 1080 543 1106C550 1111 558 1118 562 1121C568 1126 589 1145 611 1164C615 1168 625 1177 634 1185C643 1193 654 1203 659 1207C710 1254 763 1295 800 1315C806 1318 812 1322 812 1322C814 1323 830 1330 840 1334C843 1335 848 1338 850 1339C853 1339 858 1341 862 1342C867 1344 875 1346 880 1347C890 1350 921 1356 935 1357C949 1358 974 1358 987 1357ZM1000 1110C1008 1109 1016 1108 1020 1107C1024 1107 1033 1105 1040 1103C1048 1101 1057 1099 1060 1098C1063 1097 1069 1095 1073 1094C1077 1093 1083 1091 1086 1089C1090 1087 1093 1086 1094 1086C1095 1086 1100 1084 1105 1081C1160 1057 1217 1019 1289 958C1298 950 1310 941 1314 938C1318 934 1328 926 1336 918C1352 905 1367 893 1398 868C1422 849 1425 846 1425 843C1425 839 1423 837 1406 824C1379 803 1381 804 1361 820C1304 867 1261 899 1219 924C1193 939 1154 958 1130 967C1126 968 1120 971 1117 972C1086 983 1041 993 1003 997C984 998 940 998 921 997C879 992 841 983 797 967C786 963 758 949 740 939C699 916 642 874 595 832C580 818 574 814 569 815C567 816 538 839 535 843C530 849 532 851 559 874C585 895 597 906 610 919C618 925 625 932 628 934C630 936 637 942 643 948C649 953 658 962 664 967C670 972 679 980 685 985C750 1042 801 1076 856 1095C877 1102 906 1109 924 1110C932 1111 939 1111 940 1111C943 1112 988 1111 1000 1110ZM1016 872C1028 870 1040 868 1044 867C1048 866 1056 863 1062 862C1068 860 1074 858 1076 858C1078 857 1082 855 1085 854C1105 848 1151 824 1181 805C1205 789 1256 751 1267 740C1276 731 1275 729 1259 719C1223 696 1190 678 1170 669C1139 656 1127 652 1096 642C1058 630 1006 623 963 623C949 623 919 625 908 626C904 627 894 629 888 630C882 630 871 633 864 634C858 636 851 638 849 639C844 640 817 649 804 654C793 658 757 676 742 685C724 695 683 723 677 729C673 732 672 736 674 740C676 742 685 749 713 773C736 793 767 815 791 829C831 853 866 865 908 872C919 874 928 875 928 875C929 876 945 876 963 876C996 875 997 875 1016 872ZM425 772C427 772 453 753 466 742C478 731 478 729 465 718C453 707 426 687 422 685C417 683 413 683 406 687C403 689 397 692 391 696C370 708 360 713 352 717C347 719 341 722 340 723C338 726 337 730 339 732C340 732 350 737 362 743C373 748 385 754 388 756C391 758 394 759 394 759C395 759 399 762 405 765C415 771 421 773 423 772C424 772 425 772 425 772ZM1556 759C1565 754 1581 745 1593 739C1616 728 1619 726 1617 722C1617 720 1613 718 1608 715C1599 711 1580 699 1558 686C1545 678 1541 677 1536 680C1532 682 1514 696 1497 708C1481 721 1480 723 1482 728C1483 730 1510 751 1526 762C1536 769 1538 769 1556 759ZM593 640C629 613 660 592 680 581C682 579 689 576 694 573C710 563 743 547 763 540C781 532 819 520 831 518C835 517 842 515 848 514C853 512 861 511 866 510C871 509 880 508 886 507C908 503 927 502 963 502C1004 502 1018 503 1048 507C1052 508 1062 510 1068 511C1074 512 1085 514 1091 515C1097 517 1105 518 1107 519C1109 519 1113 520 1115 521C1118 522 1125 524 1132 526C1149 530 1179 541 1200 550C1207 553 1215 556 1219 558C1228 562 1257 576 1274 586C1295 598 1317 611 1344 629C1367 645 1371 647 1376 647C1379 647 1382 645 1403 629C1411 622 1420 615 1422 613C1432 605 1433 601 1427 596C1423 591 1418 587 1370 552C1316 511 1278 485 1254 470C1214 445 1160 418 1145 414C1143 413 1139 412 1137 410C1134 409 1129 407 1125 406C1120 405 1115 403 1112 402C1109 400 1103 398 1099 397C1095 396 1089 395 1085 393C1081 392 1076 391 1072 390C1068 389 1060 388 1052 386C1019 379 954 376 912 381C857 387 802 405 748 436C730 446 698 468 681 480C675 485 667 491 664 493C656 498 611 534 603 541C598 546 585 556 548 586C538 594 529 602 528 603C527 604 527 606 527 608C527 611 532 616 544 626C548 629 555 635 560 639C575 652 577 652 593 640ZM419 532C424 530 464 499 501 468C557 422 610 381 640 360C680 334 730 307 766 293C792 283 827 272 843 270C847 269 854 267 858 266C862 265 870 264 874 263C879 262 889 261 896 260C938 255 985 255 1034 260C1062 264 1066 264 1075 267C1080 268 1088 269 1092 270C1097 271 1104 272 1109 274C1114 275 1121 277 1125 278C1139 281 1165 290 1184 298C1189 300 1194 302 1194 302C1197 302 1255 330 1272 339C1336 376 1366 396 1501 499C1514 508 1528 519 1532 522C1544 529 1545 529 1565 519C1573 514 1588 507 1598 502C1615 494 1618 492 1618 489C1618 486 1612 482 1601 476C1555 451 1495 411 1428 360C1355 304 1327 284 1306 269C1278 250 1241 226 1226 218C1221 215 1212 210 1207 207C1198 202 1168 187 1153 181C1129 171 1097 160 1086 158C1083 157 1074 155 1066 154C1050 150 1017 145 997 143C983 142 935 142 920 144C895 147 860 154 840 161C836 162 829 164 824 166C819 167 814 169 812 170C809 171 805 173 802 174C798 175 787 181 776 186C722 213 685 239 599 309C537 360 520 373 490 395C447 427 403 455 360 477C350 482 341 487 340 488C339 489 338 490 338 492C338 494 344 499 349 501C353 502 389 520 404 529C413 533 414 534 419 532Z"/><circle id="pupil" cx="969" cy="746" r="65"/></svg></div>
+  <div class="hero-foot">
+    <h1><span class="mask"><span style="--d:600ms">Mide</span></span><span class="mask"><span style="--d:750ms"><em>y crece.</em></span></span></h1>
+    <p class="lede r" style="--d:1000ms">Agencia de marketing digital guiado por datos: campañas, contenido, web y automatización para empresas que quieren ver con claridad.<b>Tijuana · Baja California</b></p>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>Campañas digitales</span><span>Analítica</span><span>Desarrollo web</span><span>Fotografía</span><span>Video con dron</span><span>Automatización</span><span>Inteligencia de mercado</span>
+  <span>Campañas digitales</span><span>Analítica</span><span>Desarrollo web</span><span>Fotografía</span><span>Video con dron</span><span>Automatización</span><span>Inteligencia de mercado</span>
+</div></div>
+
+<section class="statement pad" aria-label="Manifiesto">
+  <div class="stick"><p id="words">Vemos lo que otros pasan por alto. Medimos cada campaña, cuidamos cada imagen y convertimos cada dato en una decisión que hace crecer tu empresa.</p></div>
+</section>
+
+<section class="sec pad" id="servicios">
+  <div class="sec-head">
+    <div><span class="mono r">( 01 — Servicios )</span><h2><span class="mask"><span>Todo lo que tu</span></span><span class="mask"><span style="--d:120ms"><em>marca necesita.</em></span></span></h2></div>
+    <p class="r" style="--d:200ms">Ocho servicios conectados por un mismo principio: lo que hacemos se mide. Contrátalos por separado o como un solo equipo de marketing externo. Toca cualquiera para ver qué incluye.</p>
+  </div>
+  <div class="svc" id="svc">
+
+    <article class="item r"><span class="n">01</span><div><h3>Asesoría en campañas</h3><span class="tag">Marketing digital</span></div>
+      <svg viewBox="0 0 32 32"><path class="draw" d="M4 13v6l14 6V7L4 13Z"/><path class="draw" d="M18 11c3 1 4 3 4 5s-1 4-4 5M24 8c3 2 4.5 5 4.5 8s-1.5 6-4.5 8M8 20l2 7h3l-1-6"/></svg>
+      <div class="detail"><div><p>Revisamos tus campañas actuales, detectamos dónde se pierde el presupuesto y te dejamos un plan claro para mejorar resultados, ya sea que las operes tú o tu agencia.</p><ul><li>Auditoría de cuentas publicitarias</li><li>Plan de campaña y presupuesto</li><li>Definición de públicos y mensajes</li><li>Sesiones de seguimiento mensuales</li></ul></div></div></article>
+
+    <article class="item r"><span class="n">02</span><div><h3>Publicidad digital</h3><span class="tag">Meta · Google · TikTok</span></div>
+      <svg viewBox="0 0 32 32"><circle class="draw" cx="16" cy="16" r="13"/><circle class="draw" cx="16" cy="16" r="7.5"/><circle cx="16" cy="16" r="2" fill="currentColor"/><path class="draw" d="M16 16 27 5M23 5h4v4"/></svg>
+      <div class="detail"><div><p>Diseñamos, lanzamos y optimizamos campañas con objetivos medibles: prospectos, ventas o visitas a tu negocio. Cada peso invertido se puede rastrear.</p><ul><li>Configuración de cuentas y píxeles</li><li>Creativos y textos para anuncios</li><li>Optimización semanal</li><li>Reporte de resultados y ROAS</li></ul></div></div></article>
+
+    <article class="item r"><span class="n">03</span><div><h3>Desarrollo web</h3><span class="tag">Sitios · Landing pages</span></div>
+      <svg viewBox="0 0 32 32"><rect class="draw" x="3" y="5" width="26" height="20" rx="2"/><path class="draw" d="M3 10h26M11 29h10M16 25v4M12 15l-3 3 3 3M20 15l3 3-3 3"/></svg>
+      <div class="detail"><div><p>Sitios rápidos, elegantes y pensados para convertir. Como este: hechos a la medida, sin plantillas genéricas y listos para medir cada visita.</p><ul><li>Sitios corporativos y landing pages</li><li>Diseño adaptado a celular</li><li>Formularios y botón de WhatsApp</li><li>Analítica y SEO básico incluidos</li></ul></div></div></article>
+
+    <article class="item r"><span class="n">04</span><div><h3>Sesiones de fotografía</h3><span class="tag">Producto · Espacios · Equipo</span></div>
+      <svg viewBox="0 0 32 32"><path class="draw" d="M4 10h5l2-3h10l2 3h5v15H4Z"/><circle class="draw" cx="16" cy="17" r="5"/><circle cx="24.5" cy="13" r="1" fill="currentColor"/></svg>
+      <div class="detail"><div><p>Fotografía profesional para tu marca, tus productos y tu equipo. Imágenes con dirección de arte, listas para redes, web y campañas.</p><ul><li>Fotografía de producto</li><li>Retrato corporativo y de equipo</li><li>Espacios, sucursales e inmuebles</li><li>Edición y entrega en formatos para redes</li></ul></div></div></article>
+
+    <article class="item r"><span class="n">05</span><div><h3>Video con <em>dron</em></h3><span class="tag">Aéreo · Recorridos · Eventos</span></div>
+      <svg viewBox="0 0 32 32"><rect class="draw" x="12" y="13" width="8" height="6" rx="1.5"/><path class="draw" d="M12 14 7 10M20 14l5-4M12 18l-5 4M20 18l5 4"/><path class="draw" d="M3 9h8M21 9h8M3 23h8M21 23h8"/><circle cx="16" cy="16" r="1" fill="currentColor"/></svg>
+      <div class="detail"><div><p>Tomas aéreas que muestran lo que una foto no alcanza: desarrollos, terrenos, negocios y eventos desde otra perspectiva, editadas para redes y anuncios.</p><ul><li>Video y fotografía aérea</li><li>Recorridos de inmuebles y desarrollos</li><li>Cobertura de eventos</li><li>Edición vertical y horizontal</li></ul></div></div></article>
+
+    <article class="item r"><span class="n">06</span><div><h3>Analítica <em>&amp;</em> dashboards</h3><span class="tag">Looker Studio · Atribución</span></div>
+      <svg viewBox="0 0 32 32"><path class="draw" d="M3 28h26M7 24v-6M13 24V12M19 24v-9M25 24V5"/><path class="draw" d="M5 14l7-6 6 4 9-8"/></svg>
+      <div class="detail"><div><p>Conectamos tus fuentes de datos en un solo tablero para saber qué campaña vende, cuánto cuesta cada cliente y dónde conviene invertir.</p><ul><li>Tableros en Looker Studio</li><li>Atribución de ventas a campañas</li><li>Indicadores de costo y retorno</li><li>Reportes automáticos</li></ul></div></div></article>
+
+    <article class="item r"><span class="n">07</span><div><h3>Automatización <em>y CRM</em></h3><span class="tag">HubSpot · Zapier · WhatsApp</span></div>
+      <svg viewBox="0 0 32 32"><circle class="draw" cx="7" cy="8" r="4"/><circle class="draw" cx="25" cy="16" r="4"/><circle class="draw" cx="7" cy="24" r="4"/><path class="draw" d="M11 8c7 0 7 8 10 8M11 24c7 0 7-8 10-8"/></svg>
+      <div class="detail"><div><p>Flujos que dan seguimiento a cada prospecto sin trabajo manual: desde que llega el contacto hasta que se cierra la venta, nada se pierde.</p><ul><li>Configuración de CRM</li><li>Clasificación y seguimiento de prospectos</li><li>Integraciones entre tus herramientas</li><li>Mensajes y avisos automáticos</li></ul></div></div></article>
+
+    <article class="item r"><span class="n">08</span><div><h3>Inteligencia <em>de mercado</em></h3><span class="tag">Competencia · Precios · Tendencias</span></div>
+      <svg viewBox="0 0 32 32"><path class="draw" d="M2 16c4-6.5 8.5-10 14-10s10 3.5 14 10c-4 6.5-8.5 10-14 10S6 22.5 2 16Z"/><circle class="draw" cx="16" cy="16" r="5"/><circle cx="16" cy="16" r="1.6" fill="currentColor"/></svg>
+      <div class="detail"><div><p>Monitoreamos a tu competencia y tu mercado para que cada decisión tenga contexto: precios, promociones, anuncios y tendencias.</p><ul><li>Monitoreo de precios y promociones</li><li>Análisis de anuncios de la competencia</li><li>Reportes periódicos</li><li>Recomendaciones accionables</li></ul></div></div></article>
+
+  </div>
+</section>
+
+<section class="sec pad visual" id="produccion">
+  <svg class="big-outline" viewBox="0 0 1920 1498" aria-hidden="true" id="bigo"><use href="#mk"/></svg>
+  <div class="sec-head" style="position:relative">
+    <div><span class="mono r">( 02 — Producción )</span><h2><span class="mask"><span>Contenido que</span></span><span class="mask"><span style="--d:120ms"><em>se ve y se mide.</em></span></span></h2></div>
+    <p class="r" style="--d:200ms">Producimos la imagen de tu marca y la ponemos a trabajar: cada foto, video y página se publica con un objetivo y se mide su resultado.</p>
+  </div>
+  <div class="trio">
+    <div class="cell r"><svg viewBox="0 0 32 32"><path d="M4 10h5l2-3h10l2 3h5v15H4Z"/><circle cx="16" cy="17" r="5"/></svg><div><h3>Fotografía</h3><p>Producto, retrato, espacios y sucursales con dirección de arte.</p><div class="mono">Sesión · Edición · Entrega</div></div></div>
+    <div class="cell r" style="--d:120ms"><svg viewBox="0 0 32 32"><rect x="12" y="13" width="8" height="6" rx="1.5"/><path d="M12 14 7 10M20 14l5-4M12 18l-5 4M20 18l5 4M3 9h8M21 9h8M3 23h8M21 23h8"/></svg><div><h3>Video <em>aéreo</em></h3><p>Tomas con dron para inmuebles, terrenos, negocios y eventos.</p><div class="mono">Vuelo · Edición · Formatos</div></div></div>
+    <div class="cell r" style="--d:240ms"><svg viewBox="0 0 32 32"><rect x="3" y="5" width="26" height="20" rx="2"/><path d="M3 10h26M12 15l-3 3 3 3M20 15l3 3-3 3"/></svg><div><h3>Sitios web</h3><p>Páginas a la medida, rápidas y listas para convertir visitas en clientes.</p><div class="mono">Diseño · Desarrollo · Medición</div></div></div>
+  </div>
+</section>
+
+<section class="sec pad" id="metodo">
+  <div class="sec-head">
+    <div><span class="mono r">( 03 — Método )</span><h2><span class="mask"><span>Cuatro pasos,</span></span><span class="mask"><span style="--d:120ms"><em>una dirección.</em></span></span></h2></div>
+    <p class="r" style="--d:200ms">Un proceso simple que se repite y mejora en cada ciclo.</p>
+  </div>
+  <div class="steps">
+    <div class="step r"><div class="k">01</div><h3>Diagnóstico</h3><p>Conocemos tu negocio, revisamos lo que ya tienes y definimos qué indicadores importan.</p></div>
+    <div class="step r" style="--d:120ms"><div class="k">02</div><h3><em>Estrategia</em></h3><p>Plan de acción con objetivos, presupuesto, canales y calendario de contenido.</p></div>
+    <div class="step r" style="--d:240ms"><div class="k">03</div><h3>Ejecución</h3><p>Producimos, lanzamos y automatizamos: campañas, fotos, videos y sitio web.</p></div>
+    <div class="step r" style="--d:360ms"><div class="k">04</div><h3><em>Medición</em></h3><p>Reportes claros con lo que funcionó, lo que no y el siguiente paso.</p></div>
+  </div>
+</section>
+
+<section class="sec pad" style="padding-top:0">
+  <div class="sec-head">
+    <div><span class="mono r">( 04 — Por qué Métrica )</span><h2><span class="mask"><span>Menos ruido.</span></span><span class="mask"><span style="--d:120ms"><em>Más señal.</em></span></span></h2></div>
+  </div>
+  <div class="why">
+    <div class="r"><h3>Todo se mide</h3><p>Cada campaña, foto o página tiene un objetivo y un indicador. Sabrás qué te da resultados.</p></div>
+    <div class="r" style="--d:120ms"><h3>Un solo equipo</h3><p>Estrategia, contenido, web y datos en el mismo lugar. Sin coordinar cinco proveedores.</p></div>
+    <div class="r" style="--d:240ms"><h3>Claridad, no reportes de adorno</h3><p>Te explicamos los números en lenguaje sencillo y con recomendaciones concretas.</p></div>
+  </div>
+</section>
+
+<section class="sec pad" id="preguntas" style="padding-top:0">
+  <div class="sec-head">
+    <div><span class="mono r">( 05 — Preguntas )</span><h2><span class="mask"><span>Antes de</span></span><span class="mask"><span style="--d:120ms"><em>empezar.</em></span></span></h2></div>
+  </div>
+  <div class="faq r">
+    <details><summary>¿Puedo contratar un solo servicio?</summary><p>Sí. Puedes contratar una sesión de fotos, un sitio web o una asesoría puntual, o armar un paquete mensual que combine varios servicios.</p></details>
+    <details><summary>¿Cómo se cotiza?</summary><p>Cada proyecto se cotiza según su alcance. Escríbenos por WhatsApp con lo que necesitas y te enviamos una propuesta.</p></details>
+    <details><summary>¿Trabajan con mi agencia o equipo actual?</summary><p>Sí. Nuestra asesoría en campañas está pensada también para revisar y mejorar lo que ya opera tu equipo o tu agencia.</p></details>
+    <details><summary>¿Dónde realizan las sesiones de foto y dron?</summary><p>Trabajamos desde Tijuana. Para sesiones fuera de la ciudad, cotizamos el traslado.</p></details>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <svg class="ghost" viewBox="0 0 1920 1498" aria-hidden="true" id="ghost"><use href="#mk"/></svg>
+  <span class="mono r">( ¿Empezamos? )</span>
+  <div><a class="big" data-contact="wa"><span class="mask"><span>Hablemos<em>.</em></span></span></a></div>
+  <form class="cform r" id="cform" novalidate>
+    <div class="f"><label class="mono" for="f-nombre">Nombre *</label><input id="f-nombre" name="nombre" autocomplete="name" required></div>
+    <div class="f"><label class="mono" for="f-email">Correo *</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="f"><label class="mono" for="f-tel">Teléfono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel"></div>
+    <div class="f"><label class="mono" for="f-emp">Empresa</label><input id="f-emp" name="empresa" autocomplete="organization"></div>
+    <div class="f full"><label class="mono" for="f-srv">Servicio de interés</label><select id="f-srv" name="servicio">
+      <option value="">Selecciona una opción</option><option>Asesoría en campañas</option><option>Publicidad digital</option><option>Desarrollo web</option><option>Sesiones de fotografía</option><option>Video con dron</option><option>Analítica y dashboards</option><option>Automatización y CRM</option><option>Inteligencia de mercado</option><option>Varios / aún no sé</option>
+    </select></div>
+    <div class="f full"><label class="mono" for="f-msg">Mensaje *</label><textarea id="f-msg" name="mensaje" rows="3" required></textarea></div>
+    <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="hidden" name="_subject" value="Nuevo contacto desde metricamkt.com">
+    <div class="full cf-row"><button class="send mono" type="submit">Enviar mensaje <span aria-hidden="true">→</span></button><div id="ts"></div></div>
+    <p class="full fmsg" id="fmsg" role="status" aria-live="polite"></p>
+  </form>
+  <div class="grid r">
+    <div><b>Teléfono · WhatsApp</b><a data-contact="tel" id="teltxt">+52 664 443 9343</a></div>
+    <div><b>Correo</b><a data-contact="mail" id="mailtxt"></a></div>
+    <div><b>Métrica mkt</b>Tijuana, B.C. · © <span id="y"></span></div>
+  </div>
+</section>
+
+<div class="wa" id="wa">
+  <div class="wa-panel" id="wa-panel" role="dialog" aria-label="Escríbenos por WhatsApp">
+    <div class="wa-head"><img src="assets/icon.svg" alt=""><div><strong>Métrica mkt</strong><span class="mono">WhatsApp · Tijuana</span></div></div>
+    <div class="wa-body">
+      <p class="wa-msg">Hola, ¿en qué podemos ayudarte? Cuéntanos de tu proyecto y te respondemos por WhatsApp.</p>
+      <label class="mono" for="wa-txt">Tu mensaje</label>
+      <textarea id="wa-txt" rows="2" placeholder="Me interesa…"></textarea>
+      <a class="wa-go mono" id="wa-go" data-contact="wa">Enviar por WhatsApp <span aria-hidden="true">→</span></a>
+      <a class="wa-call" data-contact="tel">o llámanos al&nbsp;<u>+52 664 443 9343</u></a>
+    </div>
+  </div>
+  <button class="wa-float" id="wa-btn" aria-expanded="false" aria-controls="wa-panel" aria-label="Escribir por WhatsApp"><span class="x" aria-hidden="true">×</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg></button>
+</div>
+
+<script>
+/* ===== EDITA AQUÍ TUS DATOS DE CONTACTO ===== */
+const WHATSAPP = "526644439343";            // número con código de país, sin + ni espacios
+const CORREO   = "arturoch@metricamkt.com"; // correo de contacto
+const MENSAJE  = "Hola, quiero más información sobre Métrica mkt.";
+const FORMSPREE = "";  // ID del formulario en Formspree (lo que va después de formspree.io/f/), ej. "xqazwsxe"
+const TURNSTILE = "";  // Site Key de Cloudflare Turnstile, ej. "0x4AAAAAAA..."
+/* ============================================ */
+
+const waLink=t=>`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t||MENSAJE)}`;
+document.querySelectorAll('[data-contact]').forEach(a=>{
+  const c=a.dataset.contact;
+  if(c==='wa'){a.href=waLink();a.target='_blank';a.rel='noopener'}
+  else if(c==='tel')a.href=`tel:+${WHATSAPP}`;
+  else a.href=`mailto:${CORREO}`;
+});
+
+// ventana de WhatsApp: el texto escrito viaja en el enlace
+const wa=document.getElementById('wa'),waBtn=document.getElementById('wa-btn'),waTxt=document.getElementById('wa-txt'),waGo=document.getElementById('wa-go');
+const setWa=o=>{wa.classList.toggle('open',o);document.getElementById('wa-panel').inert=!o;waBtn.setAttribute('aria-expanded',o);waBtn.setAttribute('aria-label',o?'Cerrar ventana de WhatsApp':'Escribir por WhatsApp');if(o&&matchMedia('(hover:hover)').matches)waTxt.focus()};
+setWa(false);
+waBtn.onclick=()=>setWa(!wa.classList.contains('open'));
+waTxt.oninput=()=>waGo.href=waLink(waTxt.value.trim());
+waGo.addEventListener('click',()=>setTimeout(()=>setWa(false),300));
+document.addEventListener('click',e=>{if(wa.classList.contains('open')&&!wa.contains(e.target))setWa(false)});
+document.getElementById('mailtxt').textContent=CORREO;
+document.getElementById('y').textContent=new Date().getFullYear();
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// formulario: Formspree lo manda al correo; Turnstile (captcha invisible) solo aparece si sospecha de un bot
+const form=document.getElementById('cform'),fmsg=document.getElementById('fmsg'),send=form.querySelector('.send');
+const say=(t,ok)=>{fmsg.textContent=t;fmsg.classList.toggle('ok',!!ok)};
+if(TURNSTILE){
+  window.onTs=()=>turnstile.render('#ts',{sitekey:TURNSTILE,theme:'dark',appearance:'interaction-only',language:'es'});
+  const s=document.createElement('script');s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTs';s.async=true;document.head.appendChild(s);
+}
+form.addEventListener('input',e=>e.target.removeAttribute('aria-invalid'));
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  form.querySelectorAll('[aria-invalid]').forEach(i=>i.removeAttribute('aria-invalid'));
+  const bad=[...form.querySelectorAll('[required]')].filter(i=>!i.checkValidity());
+  if(bad.length){bad.forEach(i=>i.setAttribute('aria-invalid','true'));bad[0].focus();
+    return say(bad.some(i=>!i.value)?'Completa los campos marcados con *.':'Revisa que el correo esté bien escrito.')}
+  if(!FORMSPREE)return say('El formulario aún no está conectado. Escríbenos por WhatsApp mientras tanto.');
+  send.disabled=true;say('Enviando…');
+  try{
+    const r=await fetch(`https://formspree.io/f/${FORMSPREE}`,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+    if(!r.ok)throw 0;
+    form.reset();say('Gracias. Recibimos tu mensaje y te responderemos pronto.',true);
+  }catch{say('No se pudo enviar. Intenta de nuevo o escríbenos por WhatsApp.')}
+  finally{send.disabled=false;window.turnstile?.reset()}
+});
+
+// menú móvil (cerrado: inert para que Tab no entre; abierto: sin scroll de fondo)
+const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
+const setMenu=o=>{drawer.classList.toggle('open',o);drawer.inert=!o;burger.setAttribute('aria-expanded',o);burger.textContent=o?'Cerrar':'Menú';document.documentElement.style.overflow=o?'hidden':'';if(o)drawer.querySelector('a').focus()};
+setMenu(false);
+burger.onclick=()=>setMenu(!drawer.classList.contains('open'));
+drawer.querySelectorAll('a').forEach(a=>a.onclick=()=>setMenu(false));
+addEventListener('keydown',e=>{if(e.key!=='Escape')return;
+  if(drawer.classList.contains('open')){setMenu(false);burger.focus()}
+  else if(wa.classList.contains('open')){setWa(false);waBtn.focus()}});
+
+// servicios: abrir/cerrar al tocar o con Enter/Espacio (uno a la vez)
+const items=[...document.querySelectorAll('.item')];
+const heads=items.map(it=>it.children[1]);
+const openItem=it=>{const was=it.classList.contains('open');items.forEach((o,j)=>{o.classList.remove('open');heads[j].setAttribute('aria-expanded',false)});if(!was){it.classList.add('open');heads[items.indexOf(it)].setAttribute('aria-expanded',true)}};
+items.forEach((it,j)=>{
+  const h=heads[j];h.setAttribute('role','button');h.tabIndex=0;
+  it.addEventListener('click',()=>openItem(it));
+  h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openItem(it)}});
+});
+openItem(items[0]);
+
+// aparición
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.r,.mask').forEach(el=>io.observe(el));
+
+// manifiesto
+const wp=document.getElementById('words');
+wp.innerHTML=wp.textContent.split(' ').map(w=>`<span>${w}</span>`).join(' ');
+const words=[...wp.children];
+
+// anillos concéntricos de fondo (eco de la foto del ojo)
+const rings=document.getElementById('rings');
+for(let i=1;i<=14;i++){const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r',i*7);rings.appendChild(c)}
+
+// cursor
+const cur=document.getElementById('cur');let cx=-50,cy=-50,tx=-50,ty=-50;
+addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});
+document.querySelectorAll('a,button,.item,summary').forEach(el=>{el.addEventListener('pointerenter',()=>cur.classList.add('big'));el.addEventListener('pointerleave',()=>cur.classList.remove('big'))});
+
+// logo real: cortina de entrada + pupila que sigue al cursor
+const lens=document.querySelector('.lens'),pupil=document.getElementById('pupil');
+const PCX=969,PCY=746,PR=65;
+let mx=0,my=0,px=0,py=0;
+addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2},{passive:true});
+setTimeout(()=>lens.classList.add('on'),60);
+
+// contornos que se "dibujan" con el scroll
+const drawEls=[...document.querySelectorAll('#bigo use, #ghost use')];
+const LEN=Math.ceil(document.getElementById('mk').getTotalLength())+10;
+drawEls.forEach(u=>{u.style.strokeDasharray=LEN;u.style.strokeDashoffset=0});
+
+const o1=document.querySelector('.bg .o1'),o2=document.querySelector('.bg .o2'),o3=document.querySelector('.bg .o3');
+const bigo=document.getElementById('bigo'),ghost=document.getElementById('ghost'),prog=document.getElementById('prog');
+let sy=scrollY;
+function frame(t){
+  const s=t/1000,H=innerHeight,max=document.documentElement.scrollHeight-H||1;
+  sy+=(scrollY-sy)*.1;                       // scroll suavizado
+  const p=sy/max;
+  prog.style.transform=`scaleX(${p})`;
+  // pupila
+  px+=(mx*PR*.9-px)*.07;py+=(my*PR*.2-py)*.07;
+  pupil.setAttribute('cx',PCX+px);pupil.setAttribute('cy',PCY+py);
+  pupil.setAttribute('r',PR*(1+(reduce?0:Math.sin(s*1.4)*.06)));
+  if(!reduce){
+    const k=Math.min(sy/H,1);
+    lens.style.transform=`translateY(${Math.sin(s*.8)*5 - k*60}px) scale(${1-k*.12})`;
+    // capas de fondo: cada una a distinta velocidad, giro y escala
+    o1.style.transform=`translateY(${-sy*.15}px) rotate(${p*40}deg) scale(${1+p*.6})`;
+    o2.style.transform=`translateY(${-sy*.35}px) rotate(${-p*90}deg)`;
+    o3.style.transform=`translateY(${-sy*.25}px) rotate(${p*120}deg) scale(${1+p})`;
+    rings.style.transform=`scale(${.6+p*1.4}) rotate(${p*30}deg)`;
+    // contorno gigante de la sección negra y del contacto
+    [bigo,ghost].forEach((el,j)=>{const r=el.parentElement.getBoundingClientRect();const q=Math.min(Math.max(1-(r.top+r.height*.3)/H,0),1);
+      el.querySelector('use').style.strokeDashoffset=LEN*(1-q);
+      el.style.transform=j?`translateY(-50%) rotate(${(1-q)*-12}deg)`:`translate(-50%,-50%) scale(${.8+q*.35}) rotate(${(q-1)*8}deg)`});
+  }
+  // manifiesto palabra por palabra
+  const st=wp.closest('section').getBoundingClientRect(),pr=Math.min(Math.max(-st.top/(st.height-H),0),1);
+  const lit=reduce?words.length:Math.ceil(pr*1.2*words.length);words.forEach((w,j)=>w.classList.toggle('on',j<lit));
+  // cursor
+  cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cur.style.transform=`translate(${cx}px,${cy}px)`;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
