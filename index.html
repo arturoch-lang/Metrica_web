@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="es">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PC43571WCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PC43571WCT');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Métrica mkt — Marketing digital, contenido y datos</title>
@@ -45,12 +54,13 @@ main,section,header,footer{position:relative;z-index:1}
 @media(hover:none){.cur{display:none}}
 
 /* barra superior */
-.top{position:fixed;inset:0 0 auto;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:calc(var(--pad)*.6) var(--pad);mix-blend-mode:difference;color:#fff}
-.top img{height:22px;filter:invert(1)}
+.top{position:fixed;inset:0 0 auto;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:calc(var(--pad)*.6) var(--pad);color:var(--ink);transition:color .3s}
+.top img{height:22px;transition:filter .3s}
+.top.dark,.top.menu{color:#fff}.top.dark img,.top.menu img{filter:invert(1)}
 .top nav{display:flex;gap:28px}
 .top nav a:hover{font-style:italic}
 .burger{display:none;background:none;border:0;color:inherit;font:inherit;letter-spacing:.2em;cursor:pointer;padding:14px 0 14px 16px;margin:-14px 0}
-.progress{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--ink);transform-origin:left;transform:scaleX(0);z-index:41;mix-blend-mode:difference;filter:invert(1)}
+.progress{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--ink);transform-origin:left;transform:scaleX(0);z-index:41}
 .drawer{position:fixed;inset:0;z-index:39;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:var(--pad);clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--ease)}
 .drawer.open{clip-path:inset(0)}
 .drawer a{font:200 clamp(44px,12vw,72px)/1.05 var(--display);letter-spacing:-.05em}
@@ -223,6 +233,9 @@ main,section,header,footer{position:relative;z-index:1}
   .mono,.item .n,.item .tag,.hero .lede b,.contact .grid b{font-size:12px}
 }
 
+input,select,textarea,button,a,summary,.item>div{touch-action:manipulation}
+@media(hover:none){html{scroll-behavior:auto}.bg .o2,.bg .o3,.bg .rings{display:none}.bg svg{will-change:auto}.bg .o1{will-change:transform}}
+
 /* reveal */
 .r{opacity:0;transform:translateY(40px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0ms)}
 .r.in{opacity:1;transform:none}
@@ -366,14 +379,14 @@ main,section,header,footer{position:relative;z-index:1}
   <span class="mono r">( ¿Empezamos? )</span>
   <div><a class="big" data-contact="wa"><span class="mask"><span>Hablemos<em>.</em></span></span></a></div>
   <form class="cform r" id="cform" novalidate>
-    <div class="f"><label class="mono" for="f-nombre">Nombre *</label><input id="f-nombre" name="nombre" autocomplete="name" required></div>
-    <div class="f"><label class="mono" for="f-email">Correo *</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
-    <div class="f"><label class="mono" for="f-tel">Teléfono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel"></div>
-    <div class="f"><label class="mono" for="f-emp">Empresa</label><input id="f-emp" name="empresa" autocomplete="organization"></div>
+    <div class="f"><label class="mono" for="f-nombre">Nombre *</label><input id="f-nombre" name="nombre" autocomplete="name" enterkeyhint="next" required></div>
+    <div class="f"><label class="mono" for="f-email">Correo *</label><input id="f-email" name="email" type="email" autocomplete="email" enterkeyhint="next" required></div>
+    <div class="f"><label class="mono" for="f-tel">Teléfono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next"></div>
+    <div class="f"><label class="mono" for="f-emp">Empresa</label><input id="f-emp" name="empresa" autocomplete="organization" enterkeyhint="next"></div>
     <div class="f full"><label class="mono" for="f-srv">Servicio de interés</label><select id="f-srv" name="servicio">
       <option value="">Selecciona una opción</option><option>Asesoría en campañas</option><option>Publicidad digital</option><option>Desarrollo web</option><option>Sesiones de fotografía</option><option>Video con dron</option><option>Analítica y dashboards</option><option>Automatización y CRM</option><option>Inteligencia de mercado</option><option>Varios / aún no sé</option>
     </select></div>
-    <div class="f full"><label class="mono" for="f-msg">Mensaje *</label><textarea id="f-msg" name="mensaje" rows="3" required></textarea></div>
+    <div class="f full"><label class="mono" for="f-msg">Mensaje *</label><textarea id="f-msg" name="mensaje" rows="3" enterkeyhint="send" required></textarea></div>
     <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input type="hidden" name="_subject" value="Nuevo contacto desde metricamkt.com">
     <div class="full cf-row"><button class="send mono" type="submit">Enviar mensaje <span aria-hidden="true">→</span></button><div id="ts"></div></div>
@@ -405,16 +418,20 @@ main,section,header,footer{position:relative;z-index:1}
 const WHATSAPP = "526644439343";            // número con código de país, sin + ni espacios
 const CORREO   = "arturoch@metricamkt.com"; // correo de contacto
 const MENSAJE  = "Hola, quiero más información sobre Métrica mkt.";
-const FORMSPREE = "";  // ID del formulario en Formspree (lo que va después de formspree.io/f/), ej. "xqazwsxe"
+const FORMSPREE = "xpppjrgo";  // ID del formulario en Formspree (lo que va después de formspree.io/f/), ej. "xqazwsxe"
 const TURNSTILE = "";  // Site Key de Cloudflare Turnstile, ej. "0x4AAAAAAA..."
 /* ============================================ */
 
 const waLink=t=>`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t||MENSAJE)}`;
+// analytics: "contact" = clic a WhatsApp, teléfono o correo; "generate_lead" = formulario enviado
+const track=(name,params)=>window.gtag?.('event',name,params);
+const where=a=>a.closest('.wa')?'ventana_whatsapp':a.classList.contains('big')?'hablemos':'pie_contacto';
 document.querySelectorAll('[data-contact]').forEach(a=>{
   const c=a.dataset.contact;
   if(c==='wa'){a.href=waLink();a.target='_blank';a.rel='noopener'}
   else if(c==='tel')a.href=`tel:+${WHATSAPP}`;
   else a.href=`mailto:${CORREO}`;
+  a.addEventListener('click',()=>track('contact',{method:{wa:'whatsapp',tel:'telefono',mail:'correo'}[c],ubicacion:where(a)}));
 });
 
 // ventana de WhatsApp: el texto escrito viaja en el enlace
@@ -448,6 +465,7 @@ form.addEventListener('submit',async e=>{
   try{
     const r=await fetch(`https://formspree.io/f/${FORMSPREE}`,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
     if(!r.ok)throw 0;
+    track('generate_lead',{method:'formulario',servicio:form.servicio.value||'sin especificar'});
     form.reset();say('Gracias. Recibimos tu mensaje y te responderemos pronto.',true);
   }catch{say('No se pudo enviar. Intenta de nuevo o escríbenos por WhatsApp.')}
   finally{send.disabled=false;window.turnstile?.reset()}
@@ -455,7 +473,7 @@ form.addEventListener('submit',async e=>{
 
 // menú móvil (cerrado: inert para que Tab no entre; abierto: sin scroll de fondo)
 const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
-const setMenu=o=>{drawer.classList.toggle('open',o);drawer.inert=!o;burger.setAttribute('aria-expanded',o);burger.textContent=o?'Cerrar':'Menú';document.documentElement.style.overflow=o?'hidden':'';if(o)drawer.querySelector('a').focus()};
+const setMenu=o=>{drawer.classList.toggle('open',o);document.querySelector('.top').classList.toggle('menu',o);drawer.inert=!o;burger.setAttribute('aria-expanded',o);burger.textContent=o?'Cerrar':'Menú';document.documentElement.style.overflow=o?'hidden':'';if(o)drawer.querySelector('a').focus()};
 setMenu(false);
 burger.onclick=()=>setMenu(!drawer.classList.contains('open'));
 drawer.querySelectorAll('a').forEach(a=>a.onclick=()=>setMenu(false));
@@ -499,44 +517,66 @@ let mx=0,my=0,px=0,py=0;
 addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2},{passive:true});
 setTimeout(()=>lens.classList.add('on'),60);
 
-// contornos que se "dibujan" con el scroll
+// ===== animación optimizada: se pausa al escribir y, en celular, cuando no hay scroll =====
+const touch=matchMedia('(hover:none)').matches;
 const drawEls=[...document.querySelectorAll('#bigo use, #ghost use')];
 const LEN=Math.ceil(document.getElementById('mk').getTotalLength())+10;
 drawEls.forEach(u=>{u.style.strokeDasharray=LEN;u.style.strokeDashoffset=0});
-
 const o1=document.querySelector('.bg .o1'),o2=document.querySelector('.bg .o2'),o3=document.querySelector('.bg .o3');
 const bigo=document.getElementById('bigo'),ghost=document.getElementById('ghost'),prog=document.getElementById('prog');
-let sy=scrollY;
+const stmt=wp.closest('section');
+let H=innerHeight,max=1,pos={};
+const measure=()=>{H=innerHeight;max=Math.max(document.documentElement.scrollHeight-H,1);
+  [['bigo',bigo.parentElement],['ghost',ghost.parentElement],['stmt',stmt]].forEach(([k,el])=>{const r=el.getBoundingClientRect();pos[k]={top:r.top+scrollY,h:r.height}})};
+measure();addEventListener('resize',measure);addEventListener('load',measure);new ResizeObserver(measure).observe(document.body);
+
+let typing=false;
+[form,waTxt].forEach(el=>{el.addEventListener('focusin',()=>typing=true);el.addEventListener('focusout',()=>{typing=false;kick()})});
+
+let sy=scrollY,running=false,lastAct=0,lastLit=-1;
+function kick(){lastAct=performance.now();if(!running){running=true;requestAnimationFrame(frame)}}
+addEventListener('scroll',kick,{passive:true});
+addEventListener('pointermove',kick,{passive:true});
+
 function frame(t){
-  const s=t/1000,H=innerHeight,max=document.documentElement.scrollHeight-H||1;
-  sy+=(scrollY-sy)*.1;                       // scroll suavizado
-  const p=sy/max;
+  if(typing){running=false;return}
+  const s=t/1000;
+  sy+=(scrollY-sy)*.12;
+  const p=Math.min(Math.max(sy/max,0),1);
   prog.style.transform=`scaleX(${p})`;
-  // pupila
-  px+=(mx*PR*.9-px)*.07;py+=(my*PR*.2-py)*.07;
-  pupil.setAttribute('cx',PCX+px);pupil.setAttribute('cy',PCY+py);
-  pupil.setAttribute('r',PR*(1+(reduce?0:Math.sin(s*1.4)*.06)));
   if(!reduce){
     const k=Math.min(sy/H,1);
-    lens.style.transform=`translateY(${Math.sin(s*.8)*5 - k*60}px) scale(${1-k*.12})`;
-    // capas de fondo: cada una a distinta velocidad, giro y escala
-    o1.style.transform=`translateY(${-sy*.15}px) rotate(${p*40}deg) scale(${1+p*.6})`;
-    o2.style.transform=`translateY(${-sy*.35}px) rotate(${-p*90}deg)`;
-    o3.style.transform=`translateY(${-sy*.25}px) rotate(${p*120}deg) scale(${1+p})`;
-    rings.style.transform=`scale(${.6+p*1.4}) rotate(${p*30}deg)`;
-    // contorno gigante de la sección negra y del contacto
-    [bigo,ghost].forEach((el,j)=>{const r=el.parentElement.getBoundingClientRect();const q=Math.min(Math.max(1-(r.top+r.height*.3)/H,0),1);
-      el.querySelector('use').style.strokeDashoffset=LEN*(1-q);
+    if(k<1){
+      px+=(mx*PR*.9-px)*.07;py+=(my*PR*.2-py)*.07;
+      pupil.setAttribute('cx',PCX+px);pupil.setAttribute('cy',PCY+py);
+      if(!touch)pupil.setAttribute('r',PR*(1+Math.sin(s*1.4)*.06));
+      lens.style.transform=`translateY(${(touch?0:Math.sin(s*.8)*5)-k*60}px) scale(${1-k*.12})`;
+    }
+    o1.style.transform=`translate3d(0,${-sy*.15}px,0) rotate(${p*40}deg) scale(${1+p*.6})`;
+    if(!touch){
+      o2.style.transform=`translate3d(0,${-sy*.35}px,0) rotate(${-p*90}deg)`;
+      o3.style.transform=`translate3d(0,${-sy*.25}px,0) rotate(${p*120}deg) scale(${1+p})`;
+      rings.style.transform=`scale(${.6+p*1.4}) rotate(${p*30}deg)`;
+    }
+    [['bigo',bigo,0],['ghost',ghost,1]].forEach(([key,el,j])=>{const r=pos[key],top=r.top-sy;
+      if(top>H||top+r.h<0)return;
+      const q=Math.min(Math.max(1-(top+r.h*.3)/H,0),1);
+      el.firstElementChild.style.strokeDashoffset=LEN*(1-q);
       el.style.transform=j?`translateY(-50%) rotate(${(1-q)*-12}deg)`:`translate(-50%,-50%) scale(${.8+q*.35}) rotate(${(q-1)*8}deg)`});
   }
-  // manifiesto palabra por palabra
-  const st=wp.closest('section').getBoundingClientRect(),pr=Math.min(Math.max(-st.top/(st.height-H),0),1);
-  const lit=reduce?words.length:Math.ceil(pr*1.2*words.length);words.forEach((w,j)=>w.classList.toggle('on',j<lit));
-  // cursor
-  cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cur.style.transform=`translate(${cx}px,${cy}px)`;
+  const st=pos.stmt,pr=Math.min(Math.max((sy-st.top)/(st.h-H),0),1);
+  const lit=reduce?words.length:Math.ceil(pr*1.2*words.length);
+  if(lit!==lastLit){words.forEach((w,j)=>w.classList.toggle('on',j<lit));lastLit=lit}
+  if(!touch){cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cur.style.transform=`translate(${cx}px,${cy}px)`}
+  if(touch&&Math.abs(scrollY-sy)<.5&&t-lastAct>800){running=false;return}
   requestAnimationFrame(frame);
 }
-requestAnimationFrame(frame);
+kick();
+
+// barra superior blanca sobre secciones negras (sustituye al mix-blend-mode)
+const bar=document.querySelector('.top'),dark=new Set();
+const barIO=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?dark.add(e.target):dark.delete(e.target));bar.classList.toggle('dark',dark.size>0)},{rootMargin:'0px 0px -92% 0px'});
+document.querySelectorAll('.visual,.contact').forEach(el=>barIO.observe(el));
 </script>
 </body>
 </html>
